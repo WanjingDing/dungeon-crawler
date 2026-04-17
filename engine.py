@@ -1,6 +1,7 @@
 from models import Player, Room
 
 START_ROOM = "Intake Cell"
+KEY_ITEM = "key"
 
 
 def build_map() -> dict[str, Room]:
@@ -110,6 +111,24 @@ def build_map() -> dict[str, Room]:
     return rooms
 
 
+def collect_key(player: Player, room: Room) -> str:
+    """Collect the key if it is in the current room."""
+    if room.has_key and KEY_ITEM not in player.inventory:
+        player.inventory.append(KEY_ITEM)
+        room.has_key = False
+        return "You found the key!"
+    return ""
+
+
+def check_win(player: Player, room: Room) -> str:
+    """Check whether the player has won the game."""
+    if room.is_exit:
+        if KEY_ITEM in player.inventory:
+            return "You unlocked the exit gate and escaped. You win!"
+        return "The exit gate is locked. You need the key."
+    return ""
+
+
 def move_player(
     player: Player,
     rooms: dict[str, Room],
@@ -134,4 +153,14 @@ def move_player(
         )
 
     player.current_room = next_room_name
-    return next_room.description
+
+    key_message = collect_key(player, next_room)
+    win_message = check_win(player, next_room)
+
+    messages = [next_room.description]
+    if key_message:
+        messages.append(key_message)
+    if win_message:
+        messages.append(win_message)
+
+    return "\n".join(messages)

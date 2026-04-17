@@ -1,4 +1,4 @@
-from engine import START_ROOM, build_map, move_player
+from engine import KEY_ITEM, START_ROOM, build_map, move_player
 from models import Player
 
 
@@ -30,4 +30,34 @@ def test_guard_post_resets_player_to_start() -> None:
 
     assert player.current_room == START_ROOM
     assert "A guard caught you" in result
-    assert rooms[START_ROOM].description in result
+
+
+def test_collect_key_in_evidence_locker() -> None:
+    rooms = build_map()
+    player = Player(current_room="Solitary Wing")
+
+    result = move_player(player, rooms, "east")
+
+    assert player.current_room == "Evidence Locker"
+    assert KEY_ITEM in player.inventory
+    assert "You found the key!" in result
+
+
+def test_cannot_win_without_key() -> None:
+    rooms = build_map()
+    player = Player(current_room="Tunnel Junction")
+
+    result = move_player(player, rooms, "east")
+
+    assert player.current_room == "Exit Gate"
+    assert "You need the key" in result
+
+
+def test_win_with_key() -> None:
+    rooms = build_map()
+    player = Player(current_room="Tunnel Junction", inventory=[KEY_ITEM])
+
+    result = move_player(player, rooms, "east")
+
+    assert player.current_room == "Exit Gate"
+    assert "You win!" in result

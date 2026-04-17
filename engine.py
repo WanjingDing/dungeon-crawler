@@ -1,4 +1,6 @@
-from models import Room
+from models import Player, Room
+
+START_ROOM = "Intake Cell"
 
 
 def build_map() -> dict[str, Room]:
@@ -106,3 +108,30 @@ def build_map() -> dict[str, Room]:
     }
 
     return rooms
+
+
+def move_player(
+    player: Player,
+    rooms: dict[str, Room],
+    direction: str,
+) -> str:
+    """Move the player in the given direction if possible."""
+
+    current_room = rooms[player.current_room]
+
+    if direction not in current_room.exits:
+        return "You can't go that way."
+
+    next_room_name = current_room.exits[direction]
+    next_room = rooms[next_room_name]
+
+    if next_room.is_reset:
+        player.current_room = START_ROOM
+        start_room = rooms[START_ROOM]
+        return (
+            "A guard caught you and sent you back to the start.\n"
+            f"{start_room.description}"
+        )
+
+    player.current_room = next_room_name
+    return next_room.description

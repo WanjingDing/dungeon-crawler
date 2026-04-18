@@ -1,6 +1,6 @@
 from commands import parse_command
 from engine import START_ROOM, build_map, move_player
-from models import Player
+from models import Player, Room
 
 
 def print_help() -> None:
@@ -16,6 +16,19 @@ def print_help() -> None:
     print("  quit")
 
 
+def describe_current_room(player: Player, rooms: dict[str, Room]) -> str:
+    """Return a fuller description of the current room."""
+    room = rooms[player.current_room]
+    exits = ", ".join(room.exits.keys())
+
+    lines = [room.description, f"Exits: {exits}"]
+
+    if room.has_key:
+        lines.append("You notice a key in this room.")
+
+    return "\n".join(lines)
+
+
 def main() -> None:
     """Run the command-line interface for the game."""
     rooms = build_map()
@@ -23,7 +36,7 @@ def main() -> None:
 
     print("Welcome to Dungeon Crawler: Prison Escape!")
     print("Type 'help' to see available commands.\n")
-    print(rooms[player.current_room].description)
+    print(describe_current_room(player, rooms))
 
     while True:
         user_input = input("\n> ")
@@ -42,7 +55,7 @@ def main() -> None:
             break
 
         if command == "look":
-            print(rooms[player.current_room].description)
+            print(describe_current_room(player, rooms))
             continue
 
         if command == "inventory":

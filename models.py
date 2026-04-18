@@ -12,7 +12,6 @@ class Room:
     has_guard: bool = False
     has_key: bool = False
     is_exit: bool = False
-    is_reset: bool = False
 
 
 @dataclass

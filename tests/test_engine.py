@@ -30,6 +30,7 @@ def test_guard_post_resets_player_to_start() -> None:
 
     assert player.current_room == START_ROOM
     assert "A guard caught you" in result
+    assert rooms[START_ROOM].description in result
 
 
 def test_collect_key_in_evidence_locker() -> None:
@@ -61,3 +62,13 @@ def test_win_with_key() -> None:
 
     assert player.current_room == "Exit Gate"
     assert "You win!" in result
+
+
+def test_guard_post_has_guard() -> None:
+    rooms = build_map()
+    assert rooms["Guard Post"].has_guard is True
+
+
+def test_exit_gate_is_locked() -> None:
+    rooms = build_map()
+    assert rooms["Exit Gate"].locked is True

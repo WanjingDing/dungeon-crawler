@@ -52,7 +52,6 @@ def build_map() -> dict[str, Room]:
             ),
             exits={"west": "Guard Passage"},
             has_guard=True,
-            is_reset=True,
         ),
         "Solitary Wing": Room(
             name="Solitary Wing",
@@ -120,15 +119,6 @@ def collect_key(player: Player, room: Room) -> str:
     return ""
 
 
-def check_win(player: Player, room: Room) -> str:
-    """Check whether the player has won the game."""
-    if room.is_exit:
-        if KEY_ITEM in player.inventory:
-            return "You unlocked the exit gate and escaped. You win!"
-        return "The exit gate is locked. You need the key."
-    return ""
-
-
 def move_player(
     player: Player,
     rooms: dict[str, Room],
@@ -144,7 +134,7 @@ def move_player(
     next_room_name = current_room.exits[direction]
     next_room = rooms[next_room_name]
 
-    if next_room.is_reset:
+    if next_room.has_guard:
         player.current_room = START_ROOM
         start_room = rooms[START_ROOM]
         return (
@@ -152,15 +142,19 @@ def move_player(
             f"{start_room.description}"
         )
 
+    if next_room.locked and KEY_ITEM not in player.inventory:
+        player.current_room = next_room_name
+        return f"{next_room.description}\nThe exit gate is locked. You need the key."
+
     player.current_room = next_room_name
 
     key_message = collect_key(player, next_room)
-    win_message = check_win(player, next_room)
 
     messages = [next_room.description]
     if key_message:
         messages.append(key_message)
-    if win_message:
-        messages.append(win_message)
+    if next_room.is_exit and KEY_ITEM in player.inventory:
+        next_room.locked = False
+        messages.append("You unlocked the exit gate and escaped. You win!")
 
     return "\n".join(messages)

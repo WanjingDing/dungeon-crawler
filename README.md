@@ -1,4 +1,6 @@
 # Dungeon Crawler: Prison Escape
+# Authors: Wanjing Ding, Kaiyue Lou
+
 ## Overview
 This project is a text-based dungeon-crawling game implemented in Python.
 The player is trapped in a prison maze and must navigate through interconnected rooms, collect a key, and unlock the exit gate to escape.
@@ -15,8 +17,12 @@ The project is designed as a modular Python library, where the core game logic i
 final_project/
 ├── models.py
 ├── engine.py
+├── commands.py
+├── cli.py
 ├── tests/ # Unit tests
 │ └── test_engine.py
+│ └── test_commands.py
+│ └── conftest.py
 ├── .github/workflows/ 
 ├── requirements.txt
 ├── pyproject.toml
@@ -43,3 +49,6 @@ valid and invalid movement
 key pickup
 guard reset behavior
 exit conditions (with and without key)
+
+## Running the game
+python cli.py

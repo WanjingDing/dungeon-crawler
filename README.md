@@ -76,12 +76,20 @@ Intake Cell -- Central Corridor -- Guard Passage -- Guard Post
                                     Tunnel Junction --  Exit Gate
 
 
-## Local testing instructions   
-Always run tests before pushing changes. Run the test suite with:
+## Local testing instructions
+Contributors should run tests locally before pushing changes.
+Run the test suite with:
+```bash
 pytest
+```
 
 Run linting with:
+```bash
 ruff check .
+```
 
-If needed, you can also format the code with: 
+If needed, you can also format the code with:
+```bash
 ruff format .
+```
+These checks help ensure that the code passes local quality control before submission.

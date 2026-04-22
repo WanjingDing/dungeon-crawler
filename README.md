@@ -43,7 +43,7 @@ Exit the game
 
 ## How to Run the Project
 1. Clone the repository
-git clone <your-repo-link>
+git clone 
 cd final_project
 
 2. Set up environment
@@ -65,3 +65,23 @@ exit conditions (with and without key)
 
 ## Running the game
 python cli.py
+
+## Map of the game
+                Solitary Wing  -- Evidence Locker (key)
+                        |
+Intake Cell -- Central Corridor -- Guard Passage -- Guard Post
+                        |                |
+                    Laundry Cell --   Mess Hall
+                                         |
+                                    Tunnel Junction --  Exit Gate
+
+
+## Local testing instructions   
+Always run tests before pushing changes. Run the test suite with:
+pytest
+
+Run linting with:
+ruff check .
+
+If needed, you can also format the code with: 
+ruff format .

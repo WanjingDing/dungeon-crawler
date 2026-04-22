@@ -139,10 +139,7 @@ def move_player(
     if next_room.has_guard:
         player.current_room = START_ROOM
         start_room = rooms[START_ROOM]
-        return (
-            f"{next_room.description}\n\n"
-            f"{start_room.description}"
-        )
+        return f"{next_room.description}\n\n{start_room.description}"
 
     if next_room.locked and KEY_ITEM not in player.inventory:
         player.current_room = next_room_name
@@ -161,6 +158,5 @@ def move_player(
             next_room.locked = False
             player.current_room = next_room_name
             return "You unlocked the exit gate and escaped. You win!"
-            
 
     return "\n".join(messages)

@@ -14,19 +14,20 @@ The project is designed as a modular Python library, where the core game logic i
 - Reach the Exit Gate and unlock it to win the game
 
 ## Project Structure
-final_project/
-├── models.py
-├── engine.py
-├── commands.py
-├── cli.py
-├── tests/ # Unit tests
-│ └── test_engine.py
-│ └── test_commands.py
-│ └── conftest.py
-├── .github/workflows/ 
-├── requirements.txt
-├── pyproject.toml
-└── README.md
+final_project
+- models.py
+- engine.py
+- commands.py
+- cli.py
+- tests/ # Unit tests
+1. test_engine.py
+2. test_commands.py
+3. onftest.py
+- .github/workflows/ 
+- requirements.txt
+- pyproject.toml
+- README.md
+- AI_USAGE.md
 
 ## Available Commands
 Players can interact with the game using the following commands:
@@ -43,8 +44,8 @@ Exit the game
 
 ## How to Run the Project
 1. Clone the repository
-git clone 
-cd final_project
+git clone https://github.com/WanjingDing/dungeon-crawler.git
+cd dungeon-crawler
 
 2. Set up environment
 python -m venv .venv
@@ -55,7 +56,9 @@ pip install -r requirements.txt
 
 ## Running Tests
 To run all tests:
+```bash
 pytest
+```
 
 Tests cover:
 valid and invalid movement
@@ -64,7 +67,9 @@ guard reset behavior
 exit conditions (with and without key)
 
 ## Running the game
+```bash
 python cli.py
+```
 
 ## Map of the game
                 Solitary Wing  -- Evidence Locker (key)

@@ -72,13 +72,18 @@ python cli.py
 ```
 
 ## Map of the game
-                Solitary Wing  -- Evidence Locker (key)
-                        |
+
+```
+                Solitary Wing -- Evidence Locker (key)
+                         |
 Intake Cell -- Central Corridor -- Guard Passage -- Guard Post
-                        |                |
-                    Laundry Cell --   Mess Hall
+                   |                     |
+              Storage Room         Laundry Cell
                                          |
-                                    Tunnel Junction --  Exit Gate
+                                   Mess Hall
+                                         |
+                               Tunnel Junction -- Exit Gate (door)
+```
 
 
 ## Local testing instructions

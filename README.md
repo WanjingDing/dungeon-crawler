@@ -28,6 +28,19 @@ final_project/
 ├── pyproject.toml
 └── README.md
 
+## Available Commands
+Players can interact with the game using the following commands:
+1. go <direction>
+Move in a direction (north, south, east, west)
+2. look
+Display the current room description
+3. inventory
+Show items the player is carrying
+4. help
+Show available commands
+5. quit
+Exit the game
+
 ## How to Run the Project
 1. Clone the repository
 git clone <your-repo-link>

@@ -19,14 +19,23 @@ def print_help() -> None:
 def describe_current_room(player: Player, rooms: dict[str, Room]) -> str:
     """Return a fuller description of the current room."""
     room = rooms[player.current_room]
-    exits = ", ".join(room.exits.keys())
 
-    lines = [room.description, f"Exits: {exits}"]
+    lines = [f"== {room.name} ==", room.description, "Exits:"]
+    for direction, destination in room.exits.items():
+        lines.append(f"  {direction} -> {destination}")
 
     if room.has_key:
         lines.append("You notice a key in this room.")
 
     return "\n".join(lines)
+
+
+def print_current_exits(player: Player, rooms: dict[str, Room]) -> None:
+    """Print only the exits of the current room."""
+    room = rooms[player.current_room]
+    print("Exits:")
+    for direction, destination in room.exits.items():
+        print(f"  {direction} -> {destination}")
 
 
 def main() -> None:
@@ -76,6 +85,13 @@ def main() -> None:
             if "You win!" in result:
                 print("Game over.")
                 break
+
+            if result == "You can't go that way.":
+                print_current_exits(player, rooms)
+            else:
+                print(describe_current_room(player, rooms))
+
+            continue
 
 
 if __name__ == "__main__":

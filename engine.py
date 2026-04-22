@@ -47,8 +47,10 @@ def build_map() -> dict[str, Room]:
         "Guard Post": Room(
             name="Guard Post",
             description=(
-                "You have entered the guard post. A guard is stationed here! "
-                "You are caught! You're being sent back to the intake cell..."
+                "You step into the guard post.\n"
+                "A guard stands watch here.\n"
+                "Before you can react, you are caught and dragged back to the intake cell.\n"
+                "Game Restart"
             ),
             exits={"west": "Guard Passage"},
             has_guard=True,
@@ -137,24 +139,24 @@ def move_player(
     if next_room.has_guard:
         player.current_room = START_ROOM
         start_room = rooms[START_ROOM]
-        return (
-            "A guard caught you and sent you back to the start.\n"
-            f"{start_room.description}"
-        )
+        return f"{next_room.description}\n\n{start_room.description}"
 
     if next_room.locked and KEY_ITEM not in player.inventory:
         player.current_room = next_room_name
-        return f"{next_room.description}\nThe exit gate is locked. You need the key."
+        return "The exit gate is locked. You need the key."
 
     player.current_room = next_room_name
 
     key_message = collect_key(player, next_room)
 
-    messages = [next_room.description]
+    messages = []
     if key_message:
         messages.append(key_message)
-    if next_room.is_exit and KEY_ITEM in player.inventory:
-        next_room.locked = False
-        messages.append("You unlocked the exit gate and escaped. You win!")
+
+    if next_room.is_exit:
+        if KEY_ITEM in player.inventory:
+            next_room.locked = False
+            player.current_room = next_room_name
+            return "You unlocked the exit gate and escaped. You win!"
 
     return "\n".join(messages)
